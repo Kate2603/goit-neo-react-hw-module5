@@ -1,38 +1,31 @@
 import { useEffect, useState } from "react";
 import { fetchTrendingMovies } from "../../api/tmdbApi";
 import MovieList from "../../components/MovieList/MovieList";
-import Navigation from "../../components/Navigation/Navigation";
+import styles from "./HomePage.module.css";
 
 function HomePage() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Loading trending movies when mounting the component
   useEffect(() => {
-    setLoading(true); // Turn on the loading indicator
+    setLoading(true);
     fetchTrendingMovies()
-      .then(setMovies) // Updating the status with movies
+      .then(setMovies)
       .catch((err) => {
         setError("Failed to load trading movies.");
         console.error(err);
       })
-      .finally(() => setLoading(false)); // Disable loading indicator
+      .finally(() => setLoading(false));
   }, []);
 
   return (
-    <div className="home-page-container">
-      <div className="main-content">
+    <div className={styles.homePageContainer}>
+      <div className={styles.mainContent}>
         <h1>Trending Movies</h1>
       </div>
-
-      {/* Loading indicator */}
       {loading && <p>Загрузка...</p>}
-
-      {/* Error message */}
-      {error && <p className="error">{error}</p>}
-
-      {/* Movie Grid */}
+      {error && <p className={styles.error}>{error}</p>}
       {movies.length > 0 && <MovieList movies={movies} />}
     </div>
   );

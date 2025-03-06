@@ -1,0 +1,42 @@
+.movies-page-container {
+  display: flex;
+  align-items: center;
+  padding: 20px;
+}
+
+.search-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.search-input {
+  width: 250px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #007bff;
+  border-radius: 5px;
+  outline: none;
+  vertical-align: middle;
+  height: 40px;
+}
+
+.search-button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  vertical-align: middle;
+  margin-left: 30px;
+  height: 40px;
+}
+
+.search-button:hover {
+  background-color: #0056b3;
+}

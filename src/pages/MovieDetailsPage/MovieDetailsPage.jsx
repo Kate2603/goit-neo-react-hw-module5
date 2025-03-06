@@ -8,13 +8,32 @@ function MovieDetailsPage() {
   const { movieId } = useParams();
   const location = useLocation();
   const [movie, setMovie] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
   const backLink = location.state?.from || "/movies";
 
   useEffect(() => {
-    fetchMovieDetails(movieId).then(setMovie);
+    const getMovieDetails = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchMovieDetails(movieId);
+        setMovie(data);
+        setError(null);
+      } catch (error) {
+        console.error("Error fetching movie details:", error);
+        setError("Failed to load movie details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    getMovieDetails();
   }, [movieId]);
 
-  if (!movie) return <div>Loading...</div>;
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>{error}</div>;
+  if (!movie) return <div>No movie details found.</div>;
 
   return (
     <div className={styles.container}>
@@ -27,17 +46,23 @@ function MovieDetailsPage() {
         alt={movie.title}
       />
       <p>{movie.overview}</p>
+
       <div className={styles.links}>
-        <Link to="cast">Cast</Link>
-        <Link to="reviews">Reviews</Link>
+        <Link to="cast" state={{ from: backLink }}>
+          Cast
+        </Link>
+        <Link to="reviews" state={{ from: backLink }}>
+          Reviews
+        </Link>
       </div>
+
       <Outlet />
     </div>
   );
 }
 
 MovieDetailsPage.propTypes = {
-  movieId: PropTypes.string.isRequired,
+  movieId: PropTypes.string,
 };
 
 export default MovieDetailsPage;

@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { searchMovies } from "../../api/tmdbApi";
-
-import MovieList from "../../components/MovieList/MovieList";
 import SearchMovies from "../../components/SearchMovies/SearchMovies";
+import MovieList from "../../components/MovieList/MovieList";
+import styles from "./MoviesPage.module.css";
 
 function MoviesPage() {
   const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
   const handleSearch = async (query) => {
+    setLoading(true);
     try {
       const data = await searchMovies(query);
       if (data.length === 0) {
@@ -18,16 +20,27 @@ function MoviesPage() {
         setError(null);
       }
     } catch (err) {
-      setError("Error fetching movies");
-      console.error(err);
+      setError("Error searching movies");
+      console.error("Error searching movies:", err);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h1>Search Movies</h1>
-      <SearchMovies onSearch={handleSearch} />
-      {error && <p>{error}</p>}
+    <div className={styles.moviesPageContainer}>
+      <div className={styles.mainContent}>
+        <h1>Search Movies</h1>
+      </div>
+
+      <div className={styles.searchForm}>
+        <SearchMovies onSearch={handleSearch} />
+      </div>
+
+      {loading && <p>Загрузка...</p>}
+
+      {error && <p className={styles.error}>{error}</p>}
+
       {movies.length > 0 && <MovieList movies={movies} />}
     </div>
   );

@@ -14,18 +14,20 @@ function SearchMovies({ onSearch }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className={styles.searchForm}>
-      <input
-        type="text"
-        placeholder="Enter movie name..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        className={styles.searchInput}
-      />
-      <button type="submit" className={styles.searchButton}>
-        Search
-      </button>
-    </form>
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.searchForm}>
+        <input
+          type="text"
+          placeholder="Enter movie name..."
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className={styles.searchInput}
+        />
+        <button type="submit" className={styles.searchButton}>
+          Search
+        </button>
+      </form>
+    </div>
   );
 }
 
