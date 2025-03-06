@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchMovieCast } from "../../api/tmdbApi";
-import PropTypes from "prop-types";
 import styles from "./MovieCast.module.css";
 
 function MovieCast() {
@@ -10,8 +9,12 @@ function MovieCast() {
 
   useEffect(() => {
     const getCast = async () => {
-      const data = await fetchMovieCast(movieId);
-      if (data) setCast(data);
+      try {
+        const data = await fetchMovieCast(movieId);
+        if (data) setCast(data);
+      } catch (error) {
+        console.error("Error fetching movie cast:", error);
+      }
     };
 
     getCast();
@@ -43,15 +46,5 @@ function MovieCast() {
     </div>
   );
 }
-
-MovieCast.propTypes = {
-  cast: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      name: PropTypes.string.isRequired,
-      profile_path: PropTypes.string,
-    })
-  ),
-};
 
 export default MovieCast;

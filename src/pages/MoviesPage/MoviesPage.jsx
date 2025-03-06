@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { searchMovies } from "../../api/tmdbApi";
 import SearchMovies from "../../components/SearchMovies/SearchMovies";
 import MovieList from "../../components/MovieList/MovieList";
@@ -8,23 +9,43 @@ function MoviesPage() {
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
 
-  const handleSearch = async (query) => {
-    setLoading(true);
-    try {
-      const data = await searchMovies(query);
-      if (data.length === 0) {
-        setError("No movies found.");
-      } else {
-        setMovies(data);
-        setError(null);
+  const query = searchParams.get("query") || "";
+
+  useEffect(() => {
+    if (!query) return;
+
+    const fetchMovies = async () => {
+      setLoading(true);
+      try {
+        const data = await searchMovies(query);
+        if (data.length === 0) {
+          setError("No movies found.");
+          setMovies([]);
+        } else {
+          setMovies(data);
+          setError(null);
+        }
+      } catch (err) {
+        setError("Error searching movies");
+        console.error("Error searching movies:", err);
+      } finally {
+        setLoading(false);
       }
-    } catch (err) {
-      setError("Error searching movies");
-      console.error("Error searching movies:", err);
-    } finally {
-      setLoading(false);
+    };
+
+    fetchMovies();
+  }, [query]);
+
+  const handleSearch = (newQuery) => {
+    if (newQuery.trim() === "") {
+      setSearchParams({});
+      setMovies([]);
+      setError(null);
+      return;
     }
+    setSearchParams({ query: newQuery });
   };
 
   return (

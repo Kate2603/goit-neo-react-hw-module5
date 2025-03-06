@@ -1,14 +1,20 @@
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import styles from "./MovieList.module.css";
 
 function MovieList({ movies }) {
+  const location = useLocation();
+
   return (
     <div className={styles.list}>
       {movies.length > 0 ? (
         movies.map(({ id, title, poster_path, release_date, vote_average }) => (
           <div key={id} className={styles.card}>
-            <Link to={`/movies/${id}`} className={styles.cardLink}>
+            <Link
+              to={`/movies/${id}`}
+              state={{ from: location }}
+              className={styles.cardLink}
+            >
               <img
                 src={
                   poster_path
@@ -21,7 +27,11 @@ function MovieList({ movies }) {
             </Link>
             <div className={styles.cardContent}>
               <h3 className={styles.cardTitle}>
-                <Link to={`/movies/${id}`} className={styles.cardLink}>
+                <Link
+                  to={`/movies/${id}`}
+                  state={{ from: location }}
+                  className={styles.cardLink}
+                >
                   {title}
                 </Link>
               </h3>

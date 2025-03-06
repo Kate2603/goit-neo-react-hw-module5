@@ -1,34 +1,35 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Suspense } from "react";
+import { Suspense, lazy } from "react";
 import Navigation from "./components/Navigation/Navigation";
-import routes from "./routes";
 import styles from "./App.module.css";
+import { Routes, Route } from "react-router-dom";
+
+const HomePage = lazy(() => import("./pages/HomePage/HomePage"));
+const MoviesPage = lazy(() => import("./pages/MoviesPage/MoviesPage"));
+const MovieDetailsPage = lazy(() =>
+  import("./pages/MovieDetailsPage/MovieDetailsPage")
+);
+const NotFoundPage = lazy(() => import("./pages/NotFoundPage/NotFoundPage"));
+const Cast = lazy(() => import("./components/MovieCast/MovieCast"));
+const Reviews = lazy(() => import("./components/MovieReviews/MovieReviews"));
 
 function App() {
   return (
     <div className={styles.appContainer}>
-      <Router>
-        <div className={styles.searchContainer}>
-          <Navigation />
-        </div>
+      <div className={styles.searchContainer}>
+        <Navigation />
+      </div>
 
-        <Suspense fallback={<div>Loading...</div>}>
-          <Routes>
-            {routes.map(({ path, element, children }) => (
-              <Route key={path} path={path} element={element}>
-                {children &&
-                  children.map((child) => (
-                    <Route
-                      key={child.path}
-                      path={child.path}
-                      element={child.element}
-                    />
-                  ))}
-              </Route>
-            ))}
-          </Routes>
-        </Suspense>
-      </Router>
+      <Suspense fallback={<div>Loading...</div>}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/movies" element={<MoviesPage />} />
+          <Route path="/movies/:movieId" element={<MovieDetailsPage />}>
+            <Route path="cast" element={<Cast />} />
+            <Route path="reviews" element={<Reviews />} />
+          </Route>
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </Suspense>
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import { useParams, Link, Outlet, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import { fetchMovieDetails } from "../../api/tmdbApi";
 import styles from "./MovieDetailsPage.module.css";
 
@@ -60,9 +59,5 @@ function MovieDetailsPage() {
     </div>
   );
 }
-
-MovieDetailsPage.propTypes = {
-  movieId: PropTypes.string,
-};
 
 export default MovieDetailsPage;
