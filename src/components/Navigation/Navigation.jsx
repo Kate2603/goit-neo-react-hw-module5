@@ -6,7 +6,11 @@ function Navigation() {
   return (
     <header>
       <nav className={styles.nav}>
-        <img src={logo} alt="Logo" className={styles.logo} />
+        <NavLink to="/" className={styles.logoLink}>
+          <img src={logo} alt="Logo" className={styles.logo} />
+        </NavLink>
+
+        {/* Інші посилання */}
         <NavLink
           to="/"
           className={({ isActive }) =>

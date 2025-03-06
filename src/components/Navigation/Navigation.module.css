@@ -12,8 +12,14 @@
   gap: 50px;
 }
 
+.logoLink {
+  display: inline-block;
+  text-decoration: none;
+}
+
 .logo {
-  height: 20px;
+  width: 20px;
+  height: auto;
 }
 
 .link {

@@ -8,13 +8,13 @@ function HomePage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Loading trading movies when mounting the component
+  // Loading trending movies when mounting the component
   useEffect(() => {
     setLoading(true); // Turn on the loading indicator
     fetchTrendingMovies()
       .then(setMovies) // Updating the status with movies
       .catch((err) => {
-        setError("Не удалось загрузить трейдинговые фильмы.");
+        setError("Failed to load trading movies.");
         console.error(err);
       })
       .finally(() => setLoading(false)); // Disable loading indicator

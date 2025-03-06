@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 import styles from "./SearchMovies.module.css";
 
 function SearchMovies({ onSearch }) {
@@ -6,9 +7,10 @@ function SearchMovies({ onSearch }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!query.trim()) return;
-    onSearch(query);
-    setQuery("");
+    if (query.trim()) {
+      onSearch(query);
+      setQuery("");
+    }
   };
 
   return (
@@ -26,5 +28,9 @@ function SearchMovies({ onSearch }) {
     </form>
   );
 }
+
+SearchMovies.propTypes = {
+  onSearch: PropTypes.func.isRequired,
+};
 
 export default SearchMovies;

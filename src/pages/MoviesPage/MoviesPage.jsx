@@ -1,19 +1,36 @@
-import { useParams } from "react-router-dom";
-import MovieCast from "../../components/MovieCast/MovieCast";
-import MovieReviews from "../../components/MovieReviews/MovieReviews";
+import { useState } from "react";
+import { searchMovies } from "../../api/tmdbApi";
 
-function MoviePage() {
-  const { movieId } = useParams();
+import MovieList from "../../components/MovieList/MovieList";
+import SearchMovies from "../../components/SearchMovies/SearchMovies";
+
+function MoviesPage() {
+  const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
+
+  const handleSearch = async (query) => {
+    try {
+      const data = await searchMovies(query);
+      if (data.length === 0) {
+        setError("No movies found.");
+      } else {
+        setMovies(data);
+        setError(null);
+      }
+    } catch (err) {
+      setError("Error fetching movies");
+      console.error(err);
+    }
+  };
 
   return (
     <div>
-      <h2>Movie Details</h2>
-
-      {/* Components for displaying cast and review information */}
-      <MovieCast movieId={movieId} />
-      <MovieReviews movieId={movieId} />
+      <h1>Search Movies</h1>
+      <SearchMovies onSearch={handleSearch} />
+      {error && <p>{error}</p>}
+      {movies.length > 0 && <MovieList movies={movies} />}
     </div>
   );
 }
 
-export default MoviePage;
+export default MoviesPage;
