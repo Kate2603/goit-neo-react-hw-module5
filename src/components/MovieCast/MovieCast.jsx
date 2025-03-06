@@ -21,7 +21,7 @@ function MovieCast() {
   }, [movieId]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Cast</h3>
       {cast.length > 0 ? (
         <ul className={styles.list}>

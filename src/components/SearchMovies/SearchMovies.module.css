@@ -1,29 +1,21 @@
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-}
-
-.form {
+.searchForm {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  width: 100%;
+  align-items: center;
+  gap: 15px;
 }
 
-.input {
+.searchInput {
+  width: 250px;
   padding: 10px;
   font-size: 16px;
   border: 2px solid #61dafb;
   border-radius: 5px;
   outline: none;
-  max-width: 300px;
-  height: 40px;
-  margin-right: 20px;
+  height: 20px;
 }
 
-.button {
+.searchButton {
   padding: 10px 20px;
   font-size: 16px;
   background-color: #61dafb;
@@ -34,6 +26,6 @@
   height: 40px;
 }
 
-.button:hover {
+.searchButton:hover {
   background-color: #4fa3d1;
 }

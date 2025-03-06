@@ -22,7 +22,7 @@ function MovieReviews() {
   }, [movieId]);
 
   return (
-    <div>
+    <div className={styles.container}>
       <h3>Reviews</h3>
       {error && <p className={styles.error}>{error}</p>}
       {reviews.length > 0 ? (

@@ -19,7 +19,7 @@ function MovieList({ movies }) {
                 src={
                   poster_path
                     ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                    : "https://via.placeholder.com/500x750?text=No+Image"
+                    : "https://dummyimage.com/500x750/000/fff&text=No+Image"
                 }
                 alt={title || "Movie poster"}
                 className={styles.cardImage}
